@@ -2,7 +2,7 @@
 
 **Course:** Advanced Machine Learning  
 **Team:** Alina Hota, Pranit Yadav, Justin Yang, Connor Therrien, Joshua Ringler  
-**Tagline:** *Tomorrow’s price signals hidden in today’s language* :contentReference[oaicite:0]{index=0}  
+**Tagline:** *Tomorrow’s price signals hidden in today’s language*   
 
 ---
 
@@ -22,13 +22,13 @@ The goal is to forecast:
 - **Magnitude:** How large is the move likely to be?
 - **Drivers:** Which aspects of management language and guidance are most predictive?
 
-This repository combines **traditional market/financial data** with **finance-specific natural language processing** to build and evaluate several regression and meta-learning models. :contentReference[oaicite:1]{index=1}  
+This repository combines **traditional market/financial data** with **finance-specific natural language processing** to build and evaluate several regression and meta-learning models.   
 
 ---
 
 ## 2. Data Sources
 
-All data comes from Wharton Research Data Services (WRDS) feeds and related platforms: :contentReference[oaicite:2]{index=2}  
+All data comes from Wharton Research Data Services (WRDS) feeds and related platforms:   
 
 - **Capital IQ (CIQ):**  
   Earnings call transcripts and metadata.
@@ -42,7 +42,7 @@ All data comes from Wharton Research Data Services (WRDS) feeds and related plat
 ### Core Target
 
 - `close_to_open_return`: next-day open minus current close, scaled by current close.  
-  This single target embeds both direction and magnitude of the overnight reaction. :contentReference[oaicite:3]{index=3}  
+  This single target embeds both direction and magnitude of the overnight reaction.   
 
 ---
 
@@ -50,7 +50,7 @@ All data comes from Wharton Research Data Services (WRDS) feeds and related plat
 
 ### 3.1 Guidance Surprise and Firm Context
 
-From structured data: :contentReference[oaicite:4]{index=4}  
+From structured data:   
 
 - **Guidance Surprise %**
   - Difference between actual reported revenue and IBES consensus estimates, scaled by expectation.
@@ -63,7 +63,7 @@ From structured data: :contentReference[oaicite:4]{index=4}
 
 ### 3.2 NLP: Finance-Specific Sentiment (Loughran–McDonald)
 
-We use the **Loughran–McDonald financial sentiment dictionary** rather than generic sentiment tools, to handle words like “liability” or “debt” correctly in a financial context. :contentReference[oaicite:5]{index=5}  
+We use the **Loughran–McDonald financial sentiment dictionary** rather than generic sentiment tools, to handle words like “liability” or “debt” correctly in a financial context.  
 
 Key categories:
 
@@ -73,7 +73,7 @@ Key categories:
 - Strong modal / Weak modal
 - Constraining
 
-From this dictionary we build features such as: :contentReference[oaicite:6]{index=6}  
+From this dictionary we build features such as:   
 
 - `lm_positive_count`, `lm_negative_count`
 - `net_sentiment` (positive − negative)
@@ -81,7 +81,7 @@ From this dictionary we build features such as: :contentReference[oaicite:6]{ind
 
 ### 3.3 Management Tone and Communication Style
 
-To capture how management speaks (not just what they say): :contentReference[oaicite:7]{index=7}  
+To capture how management speaks (not just what they say):   
 
 - `emotional_word_ratio` – emotional vs. factual language  
 - `uncertainty_ratio` – hedging and doubt  
@@ -107,13 +107,13 @@ These roll into a composite signal:
 0.2 \times \text{Certainty}
 \]
 
-We find that **forward-looking confidence has the strongest correlation with overnight returns (r ≈ 0.15–0.20)**, while more complex/readable transcripts correlate negatively with returns (r ≈ −0.12). :contentReference[oaicite:8]{index=8}  
+We find that **forward-looking confidence has the strongest correlation with overnight returns (r ≈ 0.15–0.20)**, while more complex/readable transcripts correlate negatively with returns (r ≈ −0.12).   
 
 ---
 
 ## 4. Data Integrity and Leakage Control
 
-To ensure valid modeling: :contentReference[oaicite:9]{index=9}  
+To ensure valid modeling:  
 
 - **Entity linkage:**  
   CIQ company identifiers are mapped to Compustat `GVKEY`, then to CRSP `PERMNO`.
@@ -128,7 +128,7 @@ To ensure valid modeling: :contentReference[oaicite:9]{index=9}
 
 ## 5. Modeling Approach
 
-We treat the problem as **regression** on `close_to_open_return`, and later convert predictions to direction (up/down) for trading-relevant metrics. :contentReference[oaicite:10]{index=10}  
+We treat the problem as **regression** on `close_to_open_return`, and later convert predictions to direction (up/down) for trading-relevant metrics.   
 
 ### 5.1 Models
 
@@ -140,7 +140,7 @@ We treat the problem as **regression** on `close_to_open_return`, and later conv
 
 ### 5.2 Key Metric: Directional Accuracy
 
-While Mean Absolute Error and Root Mean Squared Error are tracked, the primary business metric is **Directional Accuracy**: the percentage of times the sign of the predicted return matches the sign of the actual return. :contentReference[oaicite:11]{index=11}  
+While Mean Absolute Error and Root Mean Squared Error are tracked, the primary business metric is **Directional Accuracy**: the percentage of times the sign of the predicted return matches the sign of the actual return.  
 
 Implementation sketch:
 
@@ -201,7 +201,7 @@ You must also have access to:
   - Build NLP features (Loughran-McDonald counts, tone, forward outlook).
 
 #### 3. Train Models
-- Use additional modeling notebooks or scripts under `notebooks/03_modeling.ipynb` or `src/models/`:
+- Use additional modeling:
   - Split into training and test sets (no leakage).
   - Fit Ridge, XGBoost, LightGBM.
   - Train stacked ensemble meta-learner.
