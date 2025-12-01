@@ -12,10 +12,6 @@ Earnings used to move on numbers alone. Now, language in earnings calls often ma
 
 This project turns earnings-call transcripts into numerical features and uses them to predict the **overnight stock return from close-to-next-open**:
 
-\[
-\text{close\_to\_open\_return} = \frac{\text{Open}_{t+1} - \text{Close}_t}{\text{Close}_t}
-\]
-
 The goal is to forecast:
 
 - **Direction:** Will the stock go up or down overnight?
